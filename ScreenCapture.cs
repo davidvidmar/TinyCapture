@@ -13,16 +13,16 @@ namespace TinyCapture
     {
         private const string Extension = ".png";
 
-        public struct RECT
+        private struct RECT
         {
-            public int Left;      
-            public int Top;       
-            public int Right;     
-            public int Bottom;    
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct WINDOWINFO
+        private struct WINDOWINFO
         {
             public uint cbSize;
             public RECT rcWindow;
@@ -45,12 +45,20 @@ namespace TinyCapture
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
-        
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
+
+        private const int DWMWA_EXTENDED_FRAME_BOUNDS = 9;
+
+        [DllImport("dwmapi.dll")]
+        static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
         public static Bitmap CaptureScreen()
         {
@@ -73,13 +81,13 @@ namespace TinyCapture
             }
             Debug.WriteLine("Filename = " + filename);
             filename = GetUniqueFilename(Settings.SavePath, filename, Extension);
-            Debug.WriteLine("Unique Filename = " + filename);            
+            Debug.WriteLine("Unique Filename = " + filename);
             bitmap.Save(filename, ImageFormat.Png);
             return filename;
         }
 
         public static string CaptureScreenToFile()
-        {                                   
+        {
             return CaptureScreenToFile(null);
         }
 
@@ -89,13 +97,25 @@ namespace TinyCapture
             var info = new WINDOWINFO();
             info.cbSize = (uint)Marshal.SizeOf(info);
 
-            GetWindowInfo(handle, ref info);
+            RECT region;
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                GetWindowRect(handle, out region);
+            }
+            else
+            {
+                if (DwmGetWindowAttribute(handle, DWMWA_EXTENDED_FRAME_BOUNDS, out region, Marshal.SizeOf(typeof(RECT))) != 0)
+                {
+                    GetWindowRect(handle, out region);
+                }
+            }
 
-            var bitmap = new Bitmap(info.rcWindow.Right - info.rcWindow.Left, info.rcWindow.Bottom - info.rcWindow.Top);
-
+            var size = new Size(region.Right - region.Left, region.Bottom - region.Top);
+            var bitmap = new Bitmap(size.Width, size.Height);
+            
             using (var g = Graphics.FromImage(bitmap))
             {
-                g.CopyFromScreen(info.rcWindow.Left, info.rcWindow.Top, 0, 0, new Size(info.rcWindow.Right - info.rcWindow.Left, info.rcWindow.Bottom - info.rcWindow.Top));
+                g.CopyFromScreen(region.Left, region.Top, 0, 0, size);
             }
             return bitmap;
         }
@@ -125,7 +145,7 @@ namespace TinyCapture
         }
 
         public static string CaptureCurrentWindowToFile()
-        {            
+        {
             return CaptureWindowToFile(GetForegroundWindow(), null);
         }
 

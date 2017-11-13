@@ -53,6 +53,7 @@ namespace TinyCapture
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
+
             if (m.Msg != GlobalHotkeys.WM_HOTKEY) return;
 
             Debug.WriteLine("Hotkey caught.");
@@ -115,8 +116,7 @@ namespace TinyCapture
 
         private void notifyIcon_Click(object sender, EventArgs e)
         {
-            var args = e as MouseEventArgs;
-            if (args != null && args.Button == MouseButtons.Left)
+            if (e is MouseEventArgs args && args.Button == MouseButtons.Left)
                 notifyIcon.ShowBalloonTip(100);
         }
 

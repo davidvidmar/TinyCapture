@@ -7,20 +7,22 @@ using System.Threading;
 namespace TinyCapture
 {
     /// <summary> This class allows you to manage a hotkey </summary>
-    public class GlobalHotkeys : IDisposable
+    internal sealed class GlobalHotkeys : IDisposable
     {
         [DllImport("user32", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool RegisterHotKey(IntPtr hwnd, int id, uint fsModifiers, uint vk);
+        internal static extern bool RegisterHotKey(IntPtr hwnd, int id, uint fsModifiers, uint vk);
+
         [DllImport("user32", SetLastError = true)]
-        public static extern int UnregisterHotKey(IntPtr hwnd, int id);
+        internal static extern int UnregisterHotKey(IntPtr hwnd, int id);
+
+        [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
+        internal static extern short GlobalAddAtom(string lpString);
+
         [DllImport("kernel32", SetLastError = true)]
-        public static extern short GlobalAddAtom(string lpString);
-        [DllImport("kernel32", SetLastError = true)]
-        public static extern short GlobalDeleteAtom(short nAtom);
-  
-       
-        public static int WM_HOTKEY = 0x312;       
+        internal static extern short GlobalDeleteAtom(short nAtom);
+
+        internal static int WM_HOTKEY = 0x312;       
 
         public GlobalHotkeys()
         {
@@ -56,7 +58,7 @@ namespace TinyCapture
                     throw new Exception("Unable to register hotkey. Error: " + Marshal.GetLastWin32Error());
 
                 HotkeyIDs.Add(hotkeyID);
-                Debug.WriteLine("ID = " + hotkeyID);
+                Debug.WriteLine("Register Global Hotkey - Hotkey ID = " + hotkeyID);
                 return hotkeyID;
             }
             catch (Exception ex)

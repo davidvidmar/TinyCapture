@@ -63,7 +63,7 @@ namespace TinyCapture
             this.toolStripMenuLine,
             this.closeMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(212, 98);
+            this.contextMenu.Size = new System.Drawing.Size(212, 76);
             this.contextMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenu_ItemClicked);
             // 
             // whatIsThisMenuItem
@@ -91,8 +91,9 @@ namespace TinyCapture
             // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(116, 22);
+            this.ClientSize = new System.Drawing.Size(120, 23);
             this.ControlBox = false;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

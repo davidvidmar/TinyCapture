@@ -1,5 +1,7 @@
 # TinyCapture
 
+![TinyCapture](https://raw.githubusercontent.com/davidvidmar/TinyCapture/master/TinyCapture/TinyCapture.png)
+
 **Minimalistic screen capture program.**
 
 Great for writing documentation, articles and blog posts.  Nothing to install, no dependancies. Just single .exe you put in your tools folder and run when needed or configure to autostart.

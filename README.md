@@ -12,4 +12,6 @@ Right click on tray and and create default.ini if you want to change some things
 - hotkeys
 - wheter you want to see notifications when capture happens
 
+Latest download: [Version 1.1](https://github.com/davidvidmar/TinyCapture/releases/latest)
+
 Icon by [Recep Kütük](https://www.iconfinder.com/icons/728925/computer_desktop_monitor_pc_screen_television_tv_icon)

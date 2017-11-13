@@ -93,7 +93,6 @@ namespace TinyCapture
             // 
             this.ClientSize = new System.Drawing.Size(120, 23);
             this.ControlBox = false;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

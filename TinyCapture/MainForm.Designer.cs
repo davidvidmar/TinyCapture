@@ -41,6 +41,7 @@ namespace TinyCapture
             this.createDefaultSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuLine = new System.Windows.Forms.ToolStripSeparator();
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startWithWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,10 +61,11 @@ namespace TinyCapture
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.whatIsThisMenuItem,
             this.createDefaultSettingsMenuItem,
+            this.startWithWindowsToolStripMenuItem,
             this.toolStripMenuLine,
             this.closeMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(212, 76);
+            this.contextMenu.Size = new System.Drawing.Size(212, 120);
             this.contextMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenu_ItemClicked);
             // 
             // whatIsThisMenuItem
@@ -89,6 +91,13 @@ namespace TinyCapture
             this.closeMenuItem.Size = new System.Drawing.Size(211, 22);
             this.closeMenuItem.Text = "Close TinyCapture";
             // 
+            // startWithWindowsToolStripMenuItem
+            // 
+            this.startWithWindowsToolStripMenuItem.Name = "startWithWindowsToolStripMenuItem";
+            this.startWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.startWithWindowsToolStripMenuItem.Text = "Start with Windows";
+            this.startWithWindowsToolStripMenuItem.Click += new System.EventHandler(this.startWithWindowsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(120, 23);
@@ -113,6 +122,7 @@ namespace TinyCapture
         private ToolStripMenuItem whatIsThisMenuItem;
         private ToolStripMenuItem createDefaultSettingsMenuItem;
         private ToolStripSeparator toolStripMenuLine;
+        private ToolStripMenuItem startWithWindowsToolStripMenuItem;
     }
 }
 

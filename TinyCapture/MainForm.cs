@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using TinyCapture.Helper;
 
 namespace TinyCapture
 {
@@ -120,5 +121,19 @@ namespace TinyCapture
                 notifyIcon.ShowBalloonTip(100);
         }
 
+        private void startWithWindowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var menu = sender as ToolStripMenuItem;
+            if (AutoRunHelper.Get())
+            {
+                AutoRunHelper.Clear();
+                menu.Checked = false;
+            }
+            else
+            {
+                AutoRunHelper.Set();
+                menu.Checked = true;
+            }
+        }
     }
 }

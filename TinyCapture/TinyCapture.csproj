@@ -83,6 +83,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AutoRunHelper.cs" />
     <Compile Include="KeyModifier.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
